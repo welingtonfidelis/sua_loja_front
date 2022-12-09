@@ -1,0 +1,238 @@
+{
+  "components": {
+    "page_header": {
+      "menu_item_profile": "Perfil",
+      "menu_item_change_password": "Trocar de senha",
+      "menu_item_logout": "Sair do sistema",
+      "alert_title_logout": "Sair do sistema",
+      "alert_description_logout": "Deseja realmente sair do sistema?"
+    },
+    "drawer_menu": {},
+    "company_profile": {
+      "page_title":  "Perfil da empresa",
+      "input_name": "Nome",
+      "input_email": "Email",
+      "input_phone": "Telefone"
+    },
+    "profile": {
+      "page_title": "Perfil",
+      "input_email": "Email",
+      "input_id": "Código",
+      "input_name": "Nome",
+      "input_username": "Nome de usuário",
+      "input_username_already_used": "Nome de usuário já em uso",
+      "input_email_already_used": "Email já em uso",
+      "success_request_message": "Sucesso! Seu perfil foi atualizado.",
+      "error_request_message": "Algo deu errado. Por favor, verifique as informações inseridas e tente novamente."
+    },
+    "profile_change_password": {
+      "page_title": "Alterar Senha",
+      "input_old_password": "Senha antiga",
+      "input_new_password": "Nova senha",
+      "input_new_password_invalid_length": "Use senha com no mínimo 3 caracteres",
+      "input_repeated_new_password": "Repita a nova senha",
+      "input_repeated_new_password_invalid": "Senhas diferentes",
+      "button_delete_image": "Excluir imagem",
+      "success_request_message": "Sucesso! Sua senha foi atualizada.",
+      "error_request_message": "Algo deu errado. Por favor, verifique as informações inseridas e tente novamente."
+    },
+    "update_user_password": {
+      "page_title": "Alterar senha de usuário",
+      "input_password": "Nova senha",
+      "input_password_invalid_length": "Use senha com no mínimo 3 caracteres",
+      "input_repeated_password": "Repita a nova senha",
+      "input_repeated_password_invalid": "Senhas diferentes",
+      "success_request_message": "Sucesso! A senha foi atualizada.",
+      "error_request_message": "Algo deu errado. Por favor, verifique as informações inseridas e tente novamente."
+    },
+    "update_company_user_password": {
+      "page_title": "Alterar senha de usuário",
+      "input_password": "Nova senha",
+      "input_password_invalid_length": "Use senha com no mínimo 3 caracteres",
+      "input_repeated_password": "Repita a nova senha",
+      "input_repeated_password_invalid": "Senhas diferentes",
+      "success_request_message": "Sucesso! A senha foi atualizada.",
+      "error_request_message": "Algo deu errado. Por favor, verifique as informações inseridas e tente novamente."
+    },
+    "empty_state": {
+      "message": "Sem dados para mostrar aqui."
+    }
+  },
+  "pages": {
+    "not_found": {
+      "title_message": "Oops!",
+      "description_message": "Página não encontrada"
+    },
+    "login": {
+      "page_title": "Login",
+      "welcome_message": "Por favor, insira seus dados abaixo.",
+      "forgot_password_text": "Esqueceu sua senha? Clique aqui",
+      "error_request_message": "Algo deu errado. Por favor, verifique seu usuário/email e senha e tente novamente.",
+      "input_user_email": "Usuário ou Email",
+      "input_user_email_invalid": "Usuário ou Email inválido",
+      "input_password": "Senha",
+      "input_password_invalid": "Senha inválida",
+      "button_login": "Entrar"
+    },
+    "reset_password": {
+      "page_title": "Recuperar Senha",
+      "welcome_message": "Por favor, insira seu usuário ou email abaixo.",
+      "success_request_message": "Sucesso! Enviamos um email para você recuperar sua senha. IMPORTANTE: precisa atualizar sua senha em até 15 minutos ou seu token expirará.",
+      "error_request_message": "Algo deu errado. Por favor, verifique seu usuário/email e tente novamente.",
+      "input_user_email": "Usuário ou Email",
+      "input_user_email_invalid": "Usuário ou Email inválido"
+    },
+    "dashboard": {
+      "page_title": "Dashboard"
+    },
+    "user_list": {
+      "page_title": "Usuários",
+      "table_header_columns": "/Nome/Email/Bloqueado/Editar",
+      "table_action_edit": "Editar",
+      "table_action_block": "Bloquear",
+      "table_action_unblock": "Desbloquear",
+      "table_action_delete": "Excluir",
+      "table_action_update_password": "Alterar senha",
+      "input_search_id":  "Código",
+      "input_search_name":  "Nome",
+      "button_new_user": "Novo Usuário",
+      "alert_title_block_user": "Bloquear usuário",
+      "alert_description_block_user": "Deseja realmente bloquear este usuário ({{name}})?",
+      "alert_title_unblock_user": "Desbloquear usuário",
+      "alert_description_unblock_user": "Deseja realmente desbloquear este usuário ({{name}})?",
+      "alert_title_delete_user": "Excluir usuário",
+      "alert_description_delete_user": "Deseja realmente excluir este usuário ({{name}})?",
+      "success_request_block_message": "Sucesso! Usuário atualizado.",
+      "error_request_block_message": "Algo deu errado. Por favor, verifique as informações e tente novamente.",
+      "success_request_delete_message": "Sucesso! Usuário excluído.",
+      "error_request_get_list_message": "Algo deu errado. Por favor, verifique as informações e tente novamente."
+    },
+    "user_new_edit": {
+      "page_new_title": "Cadastrar Usuário",
+      "page_edit_title": "Editar Usuário",
+      "input_id": "Código",
+      "input_is_blocked": "Bloqueado",
+      "input_name": "Nome",
+      "input_name_invalid": "Nome inválido",
+      "input_username": "Usuário",
+      "input_username_invalid": "Usuário inválido",
+      "input_email": "Email",
+      "input_email_format_invalid": "Formato de email inválido",
+      "input_permissions": "Permissões",
+      "input_password": "Senha",
+      "input_password_invalid_length": "Use senha com no mínimo 3 caracteres",
+      "input_permissions_min_invalid": "Escolha ao menos uma permissão para este usuário",
+      "input_repeated_password": "Repita a senha",
+      "input_repeated_password_invalid": "Senhas diferentes",
+      "input_username_already_used": "Nome de usuário já em uso",
+      "input_email_already_used": "Email já em uso",
+      "success_request_edit_message": "Sucesso! Usuário '{{username}}' atualizado",
+      "error_request_edit_message": "Algo deu errado. Por favor, verifique as informações e tente novamente.",
+      "error_request_new_message": "Algo deu errado. Por favor, verifique as informações e tente novamente.",
+      "alert_title_new_user": "Usuário criado",
+      "alert_description_new_user": "O novo usuário pode acessar o sistema utilizando os dados abaixo"
+    },
+    "update_reseted_password": {
+      "page_title": "Recuperar Senha",
+      "welcome_message": "Olá, insira os dados abaixo para recuperar sua senha de acesso",
+      "input_old_password": "Senha antiga",
+      "input_new_password": "Nova senha",
+      "input_password_invalid_length": "Use senha com no mínimo 3 caracteres",
+      "input_repeated_new_password": "Repita a nova senha",
+      "input_repeated_new_password_invalid": "Senhas diferentes",
+      "success_request_message": "Sucesso! Sua senha foi recuperada.",
+      "error_request_message": "Algo deu errado. Por favor, verifique as informações inseridas e tente novamente.",
+      "error_request_token_message": "Algo deu errado. Parece que seu token é inválido. Tente resetar sua senha novamente."
+    },
+    "company_list": {
+      "page_title": "Empresas",
+      "table_header_columns": "/Nome/Email/Telefone/Bloqueado/Editar",
+      "table_action_edit": "Editar",
+      "table_action_block": "Bloquear",
+      "table_action_unblock": "Desbloquear",
+      "input_search_id":  "Código",
+      "input_search_name":  "Nome",
+      "button_new_company": "Nova Empresa",
+      "alert_title_block_company": "Bloquear empresa",
+      "alert_description_block_company": "Deseja realmente bloquear esta empresa ({{name}})?",
+      "alert_title_unblock_company": "Desbloquear empresa",
+      "alert_description_unblock_company": "Deseja realmente desbloquear esta empresa ({{name}})?",
+      "success_request_block_message": "Sucesso! Usuário atualizado.",
+      "error_request_block_message": "Algo deu errado. Por favor, verifique as informações e tente novamente.",
+      "success_request_delete_message": "Sucesso! Usuário excluído.",
+      "error_request_get_list_message": "Algo deu errado. Por favor, verifique as informações e tente novamente."
+    },
+    "company_new_edit": {
+      "page_new_title": "Cadastrar Empresa",
+      "page_edit_title": "Editar Empresa",
+      "input_id": "Código",
+      "input_is_blocked": "Bloqueado",
+      "input_name": "Nome",
+      "input_name_invalid": "Nome inválido",
+      "input_phone": "Telefone",
+      "input_phone_invalid": "Telefone inválido",
+      "input_email": "Email",
+      "input_email_format_invalid": "Formato de email inválido",
+      "input_name_already_used": "Nome de empresa já em uso",
+      "input_email_already_used": "Email já em uso",
+      "input_username": "Usuário",
+      "input_password": "Senha",
+      "input_is_blocked_own_company": "Você não pode bloquear sua própria empresa",
+      "success_request_edit_message": "Sucesso! Usuário '{{username}}' atualizado",
+      "error_request_edit_message": "Algo deu errado. Por favor, verifique as informações e tente novamente.",
+      "error_request_new_message": "Algo deu errado. Por favor, verifique as informações e tente novamente.",
+      "alert_title_new_user": "Usuário criado",
+      "alert_description_new_user": "O novo usuário pode acessar o sistema utilizando os dados abaixo"
+    },
+    "company_user_list": {
+      "page_title": "Usuários por Empresa",
+      "table_header_columns": "/Nome/Email/Empresa/Bloqueado/Editar",
+      "table_action_block": "Bloquear",
+      "table_action_unblock": "Desbloquear",
+      "table_action_delete": "Excluir",
+      "table_action_update_password": "Alterar senha",
+      "input_search_user_id":  "Código usuário",
+      "input_search_user_name":  "Nome usuário",
+      "input_search_company_id":  "Código empresa",
+      "input_search_company_name":  "Nome empresa",
+      "alert_title_block_user": "Bloquear usuário",
+      "alert_description_block_user": "Deseja realmente bloquear este usuário ({{name}})?",
+      "alert_title_unblock_user": "Desbloquear usuário",
+      "alert_description_unblock_user": "Deseja realmente desbloquear este usuário ({{name}})?",
+      "success_request_block_message": "Sucesso! Usuário atualizado.",
+      "error_request_block_message": "Algo deu errado. Por favor, verifique as informações e tente novamente.",
+      "error_request_get_list_message": "Algo deu errado. Por favor, verifique as informações e tente novamente."
+    },
+    "category_list": {
+      "page_title": "Categorias",
+      "table_header_columns": "Código/Nome/Editar",
+      "input_search_id":  "Código",
+      "input_search_name":  "Nome",
+      "table_action_edit": "Editar",
+      "button_new_category": "Nova Categoria",
+      "error_request_get_list_message": "Algo deu errado. Por favor, verifique as informações e tente novamente."
+    },
+    "category_new_edit": {
+      "page_new_title": "Cadastrar Categoria",
+      "page_edit_title": "Editar Categoria",
+      "input_id": "Código",
+      "input_name": "Nome",
+      "input_name_invalid": "Nome inválido",
+      "success_request_new_message": "Sucesso! Categoria criada",
+      "success_request_edit_message": "Sucesso! Categoria atualizada",
+      "error_request_edit_message": "Algo deu errado. Por favor, verifique as informações e tente novamente.",
+      "error_request_new_message": "Algo deu errado. Por favor, verifique as informações e tente novamente."
+    }
+  },
+  "generic": {
+    "button_save": "Salvar",
+    "button_cancel": "Cancelar",
+    "button_yes": "Sim",
+    "button_no": "Não",
+    "button_search": "Buscar",
+    "button_back": "Voltar",
+    "button_ok": "Ok",
+    "button_send": "Enviar",
+    "required_input_value": "Campo obrigatório"
+  }
+}
