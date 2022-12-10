@@ -18,19 +18,18 @@ import { Table } from "../../components/table";
 import { ApplicationRoutes } from "../../shared/enum/applicationRoutes";
 
 import { Container, EditIconContent, MainContent } from "./styles";
-import { User } from "../../domains/user";
 import { Alert } from "./components/alert";
 import { PageFilter } from "./components/pageFilter";
 import { toast } from "react-toastify";
-import { companyListPageStore } from "../../store/companyListPage";
-import { useGetCompanies } from "../../services/requests/company";
-import { Company } from "../../domains/company";
+import { productListPageStore } from "../../store/productListPage";
+import { useGetProducts } from "../../services/requests/product";
+import { Product } from "../../domains/product";
 
-const { COMPANY_EDIT } = ApplicationRoutes;
+const { PRODUCT_EDIT } = ApplicationRoutes;
 
-export const CompanyList = () => {
-  const { filters, updatePageNumber } = companyListPageStore();
-  const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
+export const ProductList = () => {
+  const { filters, updatePageNumber } = productListPageStore();
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const navigate = useNavigate();
   const { t } = useTranslation();
   const {
@@ -38,16 +37,16 @@ export const CompanyList = () => {
     onOpen: onOpenBlock,
     onClose: onCloseBlock,
   } = useDisclosure();
-  const { getQueryKey, data, isLoading, error } = useGetCompanies(filters);
+  const { getQueryKey, data, isLoading, error } = useGetProducts(filters);
 
   if (error) {
-    toast.error(t("pages.company_list.error_request_get_list_message") as string);
+    toast.error(t("pages.product_list.error_request_get_list_message") as string);
   }
 
   const handleOpenAlert = (
-    user: Company
+    user: Product
   ) => {
-    setSelectedCompany(user);
+    setSelectedProduct(user);
     onOpenBlock();
   };
 
@@ -70,17 +69,17 @@ export const CompanyList = () => {
   // }, [filters]);
 
   const columnHeader = useMemo(
-    () => t("pages.company_list.table_header_columns").split("/"),
+    () => t("pages.product_list.table_header_columns").split("/"),
     []
   );
   const columnData = useMemo(() => {
     if (!data) return [];
-    return data?.companies.map((item) => [
-      <Avatar name={item.name} src={item.image_url} />,
+    return data?.products.map((item) => [
+      <Avatar name={item.name} src={item.images[0]} />,
       item.name,
-      item.email,
-      item.phone,
-      item.is_blocked ? t("generic.button_yes") : t("generic.button_no"),
+      item.quantity,
+      item.price,
+      item.is_active ? t("generic.button_yes") : t("generic.button_no"),
       <Menu>
         <MenuButton>
           <EditIconContent>
@@ -89,14 +88,14 @@ export const CompanyList = () => {
         </MenuButton>
         <MenuList>
           <MenuItem
-            onClick={() => navigate(COMPANY_EDIT.replace(":id", String(item.id)))}
+            onClick={() => navigate(PRODUCT_EDIT.replace(":id", String(item.id)))}
           >
-            {t("pages.company_list.table_action_edit")}
+            {t("pages.product_list.table_action_edit")}
           </MenuItem>
           <MenuItem color="yellow.500" onClick={() => handleOpenAlert(item)}>
-            {item.is_blocked
-              ? t("pages.company_list.table_action_unblock")
-              : t("pages.company_list.table_action_block")}
+            {item.is_active
+              ? t("pages.product_list.table_action_active")
+              : t("pages.product_list.table_action_deactive")}
           </MenuItem>
         </MenuList>
       </Menu>,
@@ -122,7 +121,7 @@ export const CompanyList = () => {
       <Alert
         isOpenBlock={isOpenBlock}
         onCloseBlock={onCloseBlock}
-        selectedCompany={selectedCompany}
+        selectedProduct={selectedProduct}
         queryKey={getQueryKey()}
       />
     </Container>

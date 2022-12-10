@@ -2,32 +2,32 @@ import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { AlertConfirm } from "../../../../components/alertConfirm";
-import { useUpdateCompany } from "../../../../services/requests/company";
+import { useUpdateProduct } from "../../../../services/requests/product";
 import { useQueryData } from "../../../../shared/hooks/useQueryData";
 import { Props } from "./types";
 
 export const Alert = (props: Props) => {
-  const { selectedCompany, queryKey, isOpenBlock, onCloseBlock } = props;
+  const { selectedProduct, queryKey, isOpenBlock, onCloseBlock } = props;
   const { t } = useTranslation();
-  const { updateCompany, isLoading: isLoadingUpdateCompany } =
-    useUpdateCompany();
-  const { setStoreData } = useQueryData(queryKey, "companies");
+  const { updateProduct, isLoading: isLoadingUpdateCompany } =
+    useUpdateProduct();
+  const { setStoreData } = useQueryData(queryKey, "products");
 
   const handleBlockUser = useCallback(() => {
-    if (!selectedCompany) return;
+    if (!selectedProduct) return;
 
-    const { id } = selectedCompany;
-    const is_blocked = !selectedCompany.is_blocked;
-    updateCompany(
-      { id, data: { is_blocked } },
+    const { id } = selectedProduct;
+    const is_active = !selectedProduct.is_active;
+    updateProduct(
+      { id, data: { is_active } },
       {
         onSuccess() {
           toast.success(
-            t("pages.company_list.success_request_block_message") as string
+            t("pages.product_list.success_request_deactive_message") as string
           );
           setStoreData(
             {
-              is_blocked,
+              is_active,
             },
             [id],
             "id"
@@ -37,28 +37,28 @@ export const Alert = (props: Props) => {
         },
         onError() {
           toast.error(
-            t("pages.company_list.error_request_block_message") as string
+            t("pages.product_list.error_request_deactive_message") as string
           );
         },
       }
     );
-  }, [selectedCompany]);
+  }, [selectedProduct]);
 
   return (
     <>
       <AlertConfirm
         title={
-          selectedCompany?.is_blocked
-            ? t("pages.company_list.alert_title_unblock_company")
-            : t("pages.company_list.alert_title_block_company")
+          selectedProduct?.is_active
+            ? t("pages.product_list.alert_title_active_company")
+            : t("pages.product_list.alert_title_deactive_company")
         }
         description={
-          selectedCompany?.is_blocked
-            ? t("pages.company_list.alert_description_unblock_company", {
-                name: selectedCompany?.name,
+          selectedProduct?.is_active
+            ? t("pages.product_list.alert_description_active_company", {
+                name: selectedProduct?.name,
               })
-            : t("pages.company_list.alert_description_block_company", {
-                name: selectedCompany?.name,
+            : t("pages.product_list.alert_description_deactive_company", {
+                name: selectedProduct?.name,
               })
         }
         isOpen={isOpenBlock}

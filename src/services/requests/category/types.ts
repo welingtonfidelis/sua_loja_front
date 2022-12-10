@@ -3,6 +3,7 @@ import { Category } from "../../../domains/category";
 // Request
 export interface GetCategoriesPayload {
   page: number;
+  limit?: number;
   filter_by_id?: string;
   filter_by_name?: string;
 }

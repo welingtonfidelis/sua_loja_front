@@ -12,9 +12,11 @@ export const EndPoints = {
     UPDATE: "/users/:id",
     DELETE: "/users/:id",
   },
+
   PERMISSIONS: {
     LIST: "/permissions",
   },
+
   COMPANIES: {
     PROFILE: "/companies/profile",
     LIST: "/companies",
@@ -24,10 +26,18 @@ export const EndPoints = {
     USERS_LIST: "/companies/users",
     USER_UPDATE: "/companies/users/:id",
   },
+
   CATEGORIES: {
     LIST: "/categories",
     GET: "/categories/:id",
     UPDATE: "/categories/:id",
     CREATE: "/categories",
+  },
+
+  PRODUCTS: {
+    LIST: "/products",
+    GET: "/products/:id",
+    UPDATE: "/products/:id",
+    CREATE: "/products",
   },
 };

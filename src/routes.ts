@@ -14,6 +14,8 @@ import { CompanyDetail } from "./pages/companyDetail";
 import { CompanyUserList } from "./pages/companyUserList";
 import { CategoryList } from "./pages/caregoryList";
 import { CategoryDetail } from "./pages/categoryDetail";
+import { ProductList } from "./pages/productList";
+import { ProductDetail } from "./pages/productDetail";
 
 const {
   ROOT,
@@ -30,6 +32,9 @@ const {
   CATEGORY_LIST,
   CATEGORY_NEW,
   CATEGORY_EDIT,
+  PRODUCT_LIST,
+  PRODUCT_EDIT,
+  PRODUCT_NEW,
 } = ApplicationRoutes;
 const { ADMIN, MANAGER, USER } = ApplicationPermissions;
 
@@ -142,6 +147,30 @@ export const routes = [
     label: "pages.category_new_edit.page_edit_title",
     path: CATEGORY_EDIT,
     element: CategoryDetail,
+    layout: GuestLayout,
+    isMenuOption: false,
+    permissions: [ADMIN, MANAGER, USER],
+  },
+  {
+    label: "pages.product_list.page_title",
+    path: PRODUCT_LIST,
+    element: ProductList,
+    layout: LayoutWithDrawerMenu,
+    isMenuOption: true,
+    permissions: [ADMIN, MANAGER, USER],
+  },
+  {
+    label: "pages.product_new_edit.page_new_title",
+    path: PRODUCT_NEW,
+    element: ProductDetail,
+    layout: GuestLayout,
+    isMenuOption: false,
+    permissions: [ADMIN, MANAGER, USER],
+  },
+  {
+    label: "pages.product_new_edit.page_edit_title",
+    path: PRODUCT_EDIT,
+    element: ProductDetail,
     layout: GuestLayout,
     isMenuOption: false,
     permissions: [ADMIN, MANAGER, USER],

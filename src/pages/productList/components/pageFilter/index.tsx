@@ -7,7 +7,7 @@ import { ApplicationRoutes } from "../../../../shared/enum/applicationRoutes";
 import { SearchInputContent } from "./styles";
 import { companyListPageStore } from "../../../../store/companyListPage";
 
-const { COMPANY_NEW } = ApplicationRoutes;
+const { PRODUCT_NEW } = ApplicationRoutes;
 
 export const PageFilter = () => {
   const { filters, updateFilterById, updateFilterByName } = companyListPageStore();
@@ -39,7 +39,7 @@ export const PageFilter = () => {
         <Button
           minWidth={32}
           colorScheme="blue"
-          onClick={() => navigate(COMPANY_NEW)}
+          onClick={() => navigate(PRODUCT_NEW)}
         >
           {t("pages.company_list.button_new_company")}
         </Button>

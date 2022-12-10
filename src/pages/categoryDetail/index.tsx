@@ -58,7 +58,7 @@ export const CategoryDetail = () => {
           onSuccess() {
             toast.success(
               t("pages.category_new_edit.success_request_edit_message", {
-                username: values.name,
+                name: values.name,
               }) as string
             );
             navigate(-1);
@@ -78,7 +78,7 @@ export const CategoryDetail = () => {
       onSuccess() {
         toast.success(
           t("pages.category_new_edit.success_request_new_message", {
-            username: values.name,
+            name: values.name,
           }) as string
         );
         navigate(-1);

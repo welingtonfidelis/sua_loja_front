@@ -38,6 +38,18 @@ export const useGetCategories = (params: GetCategoriesPayload) => {
   return { getQueryKey, refetch, data, isLoading, error };
 };
 
+export const useGetCategoryOptionsFormat = () => {
+  const getQueryKey = () => [LIST, "options_format"];
+
+  const { data, refetch, isLoading, error } = useQuery(getQueryKey(), () =>
+    getCategories({ page: 1, limit: 100 })
+  );
+
+  const options = data?.categories.map((item) => ({ label: item.name, value: item.id }));
+
+  return { getQueryKey, refetch, data: options, isLoading, error };
+};
+
 export const useGetCategoryById = (params: GetCategoryByIdPayload) => {
   const getQueryKey = () => [GET, params];
 

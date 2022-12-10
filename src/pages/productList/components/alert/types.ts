@@ -1,10 +1,10 @@
 import { QueryKey } from "react-query";
-import { Company } from "../../../../domains/company";
+import { Product } from "../../../../domains/product";
 
 export interface Props {
   isOpenBlock: boolean;
   onCloseBlock: () => void;
 
-  selectedCompany: Company | null;
+  selectedProduct: Product | null;
   queryKey: QueryKey;
 }

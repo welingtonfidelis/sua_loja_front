@@ -37,7 +37,6 @@ export const ResetPassword = () => {
     values: FormProps,
     actions: FormikHelpers<FormProps>
   ) => {
-    console.log("values: ", values);
     resetPassword(values, {
       onSuccess(_) {
         toast.success(t("pages.reset_password.success_request_message") as string);

@@ -45,7 +45,6 @@ export const UpdateResetedPassword = () => {
   const params = getParams();
 
   const handleSubmit = async (values: FormProps) => {
-    console.log("values: ", params, values);
     const payload = { new_password: values.new_password, token: params?.token };
     updateResetedPassword(payload, {
       onSuccess(_) {
@@ -57,7 +56,6 @@ export const UpdateResetedPassword = () => {
       },
       onError(error) {
         const { message } = responseErrorHandler(error);
-        console.log("message: ", message);
 
         if (message === INVALID_RESET_TOKEN.message) {
           toast.error(

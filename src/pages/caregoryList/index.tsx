@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { BsGearFill } from "react-icons/bs";
 import {
-  Avatar,
   Divider,
   Menu,
   MenuButton,
@@ -28,10 +27,12 @@ export const CategoryList = () => {
   const { filters, updatePageNumber } = categoryListPageStore();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { getQueryKey, data, isLoading, error } = useGetCategories(filters);
+  const { data, isLoading, error } = useGetCategories(filters);
 
   if (error) {
-    toast.error(t("pages.category_list.error_request_get_list_message") as string);
+    toast.error(
+      t("pages.category_list.error_request_get_list_message") as string
+    );
   }
 
   // ===> TODO get/set filters param URL
@@ -55,8 +56,7 @@ export const CategoryList = () => {
   const columnHeader = useMemo(
     () => t("pages.category_list.table_header_columns").split("/"),
     []
-    );
-    console.log('columnHeader: ', columnHeader);
+  );
   const columnData = useMemo(() => {
     if (!data) return [];
     return data?.categories.map((item) => [
@@ -70,7 +70,9 @@ export const CategoryList = () => {
         </MenuButton>
         <MenuList>
           <MenuItem
-            onClick={() => navigate(CATEGORY_EDIT.replace(":id", String(item.id)))}
+            onClick={() =>
+              navigate(CATEGORY_EDIT.replace(":id", String(item.id)))
+            }
           >
             {t("pages.category_list.table_action_edit")}
           </MenuItem>

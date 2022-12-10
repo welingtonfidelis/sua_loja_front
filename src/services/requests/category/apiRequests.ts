@@ -33,7 +33,7 @@ export const updateCategory = async (payload: UpdateCategoryPayload) => {
 export const getCategories = async (params: GetCategoriesPayload) => {
   const { data: response } = await RestRequestService.get<GetCategoriesResponse>(
     LIST,
-    { params: { ...params, limit: 20 } }
+    { params: { ...params, limit: params.limit || 20 } }
   );
   return response;
 };
