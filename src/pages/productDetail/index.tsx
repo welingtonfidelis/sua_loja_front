@@ -10,12 +10,13 @@ import {
   TagLabel,
   Textarea,
 } from "@chakra-ui/react";
-import { Select } from "chakra-react-select";
+import { Select as SelectSearch } from "chakra-react-select";
 import { Field, Formik, Form, FormikHelpers } from "formik";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { ImageItemPreview } from "../../components/ImageItemPreview";
 
 import { PageHeader } from "../../components/pageHeader";
 import { Preloader } from "../../components/preloader";
@@ -32,6 +33,7 @@ import {
   FomrInputContainer,
   FormButtonContainer,
   FormContainer,
+  ImageListContainer,
 } from "./styles";
 import { FormProps } from "./types";
 
@@ -46,10 +48,14 @@ export const ProductDetail = () => {
   const { createProduct, isLoading: isLoadingCreateUser } = useCreateProduct();
   const { isLoading: isLoadingGetCategories, data: categoryOptions } =
     useGetCategoryOptionsFormat();
-  const [variation1, setVariation1] = useState<string[]>([]);
-  const [variation2, setVariation2] = useState<string[]>([]);
+  const [variation1Value, setVariation1Value] = useState("");
+  const [variation2Value, setVariation2Value] = useState("");
+  const [productImages, setProductImages] = useState<File[] | string[]>([]);
+  const [productDeleteImages, setProductDeleteImages] = useState<string[]>([]);
 
   const initialFormValues = useMemo(() => {
+    if (data) setProductImages(data.images);
+
     return {
       name: data?.name || "",
       description: data?.description || "",
@@ -57,52 +63,62 @@ export const ProductDetail = () => {
       price: data?.price || 0,
       category_id: data?.category_id || 0,
       is_active: data?.is_active || false,
+      variation_1: data?.variation_1 || [],
+      variation_2: data?.variation_2 || [],
     };
   }, [data]);
 
-  const defaultSelectedCategory = useMemo(() => {
-    return categoryOptions?.find((item) => item.value === initialFormValues.category_id)
-  }, [initialFormValues]);
+  const handleDeleteImage = (index: number) => {
+    if (typeof productImages[index] === "string") {
+      setProductDeleteImages((oldState) => [
+        ...oldState,
+        productImages[index] as string,
+      ]);
+    }
 
+    setProductImages((oldState) => {
+      const newState: any = [];
 
-  // const [localProfileImage, setLocalProfileImage] = useState<File | null>();
-  // const [deleteProfileImage, setDeleteProfileImage] = useState([]);
-  // const handleDeleteProfileImage = () => {
-  //   if (localProfileImage) {
-  //     setLocalProfileImage(null);
-  //     return;
-  //   }
+      oldState.forEach((item, localIndex) => {
+        if (localIndex !== index) newState.push(item);
+      });
 
-  //   setDeleteProfileImage(true);
-  //   if (data) data.image_url = "";
-  // };
-
-  // const handleAddProfileImage = (files: FileList) => {
-  //   setLocalProfileImage(files[0]);
-  //   setDeleteProfileImage(false);
-  // };
+      return newState;
+    });
+  };
 
   const handleSubmit = async (
     values: FormProps,
     actions: FormikHelpers<FormProps>
   ) => {
-    console.log("values: ", values);
     const formData = new FormData();
 
     Object.entries(values).forEach(([key, value]) => {
-      if(key !== "variation_1" && key !== "variation_2") {
+      if (key !== "variation_1" && key !== "variation_2") {
         formData.set(key, value);
       }
     });
 
-    variation1.forEach((item) => formData.append("variation_1[]", item));
-    variation2.forEach((item) => formData.append("variation_2[]", item));
+    values.variation_1.forEach((item) =>
+      formData.append("variation_1[]", item)
+    );
+    values.variation_2.forEach((item) =>
+      formData.append("variation_2[]", item)
+    );
 
-    // if (localProfileImage) formData.append("file", localProfileImage);
+    if (productImages.length) {
+      (productImages as any[])
+        .filter((item) => typeof item !== "string")
+        .forEach((item) => formData.append("files", item));
+    }
+
+    if (productDeleteImages.length) {
+      productDeleteImages.forEach((item) =>
+        formData.append("delete_files", item)
+      );
+    }
 
     if (id) {
-      // if (deleteProfileImage) formData.append("delete_image", "true");
-
       updateProduct(
         { id: Number(id), data: formData as any },
         {
@@ -142,36 +158,28 @@ export const ProductDetail = () => {
     });
   };
 
-  const handleAddVariation = (value: string, type: 1 | 2) => {
-    switch (type) {
-      case 1:
-        if (!variation1.find((item) => item === value)) {
-          setVariation1((oldState) => [...oldState, value]);
-        }
-        break;
-
-      default:
-        if (!variation2.find((item) => item === value)) {
-          setVariation2((oldState) => [...oldState, value]);
-        }
-        break;
+  const handleAddVariation = (original: string[], newValue: string) => {
+    if (!original.find((item) => item === newValue)) {
+      return [...original, newValue];
     }
+
+    return original;
   };
 
-  const handleRemoveVariation = (value: string, type: 1 | 2) => {
-    switch (type) {
-      case 1:
-        setVariation1((oldState) => {
-          return oldState.filter((subItem) => subItem !== value);
-        });
-        break;
+  const handleRemoveVariation = (original: string[], newValue: string) => {
+    return original.filter((item) => item !== newValue);
+  };
 
-      default:
-        setVariation2((oldState) => {
-          return oldState.filter((subItem) => subItem !== value);
-        });
-        break;
+  const getImageSrc = (index: number) => {
+    if (productImages[index]) {
+      if (typeof productImages[index] === "string") {
+        return productImages[index] as string;
+      }
+
+      return URL.createObjectURL(productImages[index] as File);
     }
+
+    return "";
   };
 
   return (
@@ -194,42 +202,6 @@ export const ProductDetail = () => {
             {({ errors, touched, values, setFieldValue }) => (
               <Form>
                 <FomrInputContainer>
-                  {/* <AvatarContent>
-                    <label htmlFor="image_file">
-                      {localProfileImage || data?.image_url.length ? (
-                        <AvatarImage
-                          src={
-                            localProfileImage
-                              ? URL.createObjectURL(localProfileImage)
-                              : data?.image_url
-                          }
-                        />
-                      ) : (
-                        <AvatarIcon />
-                      )}
-                      <Input
-                        id="image_file"
-                        type="file"
-                        hidden
-                        accept="image/*"
-                        onChange={(e) => {
-                          handleAddProfileImage(
-                            (e?.target?.files || []) as FileList
-                          );
-                        }}
-                      />
-                    </label>
-
-                    {(localProfileImage || Boolean(data?.image_url.length)) && (
-                      <AvatarImageDelete
-                        title={t(
-                          "components.profile_change_password.button_delete_image"
-                        )}
-                        onClick={handleDeleteProfileImage}
-                      />
-                    )}
-                  </AvatarContent> */}
-
                   {id && (
                     <FormControl>
                       <FormLabel mt="2" mb="0.2">
@@ -337,12 +309,15 @@ export const ProductDetail = () => {
                         <FormLabel mt="2" mb="0.2">
                           {t("pages.product_new_edit.input_category")}
                         </FormLabel>
-                        <Select
+                        <SelectSearch
+                          {...field}
                           isLoading={isLoadingGetCategories}
                           onChange={(e: any) =>
                             setFieldValue("category_id", e.value)
                           }
-                          defaultValue={defaultSelectedCategory}
+                          value={categoryOptions?.find(
+                            (item) => item.value === values.category_id
+                          )}
                           options={categoryOptions}
                           placeholder={t(
                             "pages.product_new_edit.input_category"
@@ -362,25 +337,40 @@ export const ProductDetail = () => {
                           {t("pages.product_new_edit.input_variation_1")}
                         </FormLabel>
                         <Input
-                          {...field}
                           mb="1.5"
+                          value={variation1Value}
+                          onChange={(e) => setVariation1Value(e.target.value)}
                           onKeyDown={(e) => {
                             if (e.key === "Enter") {
                               e.preventDefault();
-                              handleAddVariation((e.target as any).value, 1);
-                              setFieldValue("variation_1", "");
+                              setFieldValue(
+                                "variation_1",
+                                handleAddVariation(
+                                  values.variation_1,
+                                  variation1Value
+                                )
+                              );
+                              setVariation1Value("");
                             }
                           }}
                           placeholder={t(
                             "pages.product_new_edit.input_variation_1"
                           )}
                         />
-                        {(data?.variation_1 || variation1).map((item, index) => {
+                        {values.variation_1.map((item, index) => {
                           return (
                             <Tag key={index} mr="1">
                               <TagLabel>{item}</TagLabel>
                               <TagCloseButton
-                                onClick={() => handleRemoveVariation(item, 1)}
+                                onClick={() =>
+                                  setFieldValue(
+                                    "variation_1",
+                                    handleRemoveVariation(
+                                      values.variation_1,
+                                      item
+                                    )
+                                  )
+                                }
                               />
                             </Tag>
                           );
@@ -396,25 +386,40 @@ export const ProductDetail = () => {
                           {t("pages.product_new_edit.input_variation_2")}
                         </FormLabel>
                         <Input
-                          {...field}
                           mb="1.5"
+                          value={variation2Value}
+                          onChange={(e) => setVariation2Value(e.target.value)}
                           onKeyDown={(e) => {
                             if (e.key === "Enter") {
                               e.preventDefault();
-                              handleAddVariation((e.target as any).value, 2);
-                              setFieldValue("variation_2", "");
+                              setFieldValue(
+                                "variation_2",
+                                handleAddVariation(
+                                  values.variation_2,
+                                  variation2Value
+                                )
+                              );
+                              setVariation2Value("");
                             }
                           }}
                           placeholder={t(
                             "pages.product_new_edit.input_variation_2"
                           )}
                         />
-                        {(data?.variation_2 || variation2).map((item, index) => {
+                        {values.variation_2.map((item, index) => {
                           return (
                             <Tag key={index} mr="1">
                               <TagLabel>{item}</TagLabel>
                               <TagCloseButton
-                                onClick={() => handleRemoveVariation(item, 2)}
+                                onClick={() =>
+                                  setFieldValue(
+                                    "variation_2",
+                                    handleRemoveVariation(
+                                      values.variation_2,
+                                      item
+                                    )
+                                  )
+                                }
                               />
                             </Tag>
                           );
@@ -422,6 +427,45 @@ export const ProductDetail = () => {
                       </FormControl>
                     )}
                   </Field>
+
+                  <FormLabel mt="2" mb="0.2">
+                    {t("pages.product_new_edit.input_images")}
+                  </FormLabel>
+                  <BordedContainer>
+                    <ImageListContainer>
+                      {Array(9)
+                        .fill({})
+                        .map((_, index) => {
+                          return (
+                            <label htmlFor={`image_file_${index}`}>
+                              <ImageItemPreview
+                                onDeleteImage={() => handleDeleteImage(index)}
+                                imageSrc={getImageSrc(index)}
+                              />
+
+                              <Input
+                                id={`image_file_${index}`}
+                                type="file"
+                                hidden
+                                accept="image/*"
+                                onChange={(e) => {
+                                  if (e.target.files?.length) {
+                                    setProductImages((oldState) => {
+                                      const newState = [
+                                        ...oldState,
+                                        (e?.target?.files || [])[0],
+                                      ];
+
+                                      return newState as string[];
+                                    });
+                                  }
+                                }}
+                              />
+                            </label>
+                          );
+                        })}
+                    </ImageListContainer>
+                  </BordedContainer>
                 </FomrInputContainer>
 
                 <FormButtonContainer>

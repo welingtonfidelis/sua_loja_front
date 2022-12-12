@@ -36,3 +36,9 @@ export const FormButtonContainer = styled.div`
     flex: 1;
   }
 `;
+
+export const ImageListContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+`;
