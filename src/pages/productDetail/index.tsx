@@ -16,7 +16,7 @@ import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { ImageItemPreview } from "../../components/ImageItemPreview";
+import { InputImage } from "../../components/InputImage";
 
 import { PageHeader } from "../../components/pageHeader";
 import { Preloader } from "../../components/preloader";
@@ -114,7 +114,7 @@ export const ProductDetail = () => {
 
     if (productDeleteImages.length) {
       productDeleteImages.forEach((item) =>
-        formData.append("delete_files", item)
+        formData.append("delete_images[]", item)
       );
     }
 
@@ -437,31 +437,18 @@ export const ProductDetail = () => {
                         .fill({})
                         .map((_, index) => {
                           return (
-                            <label htmlFor={`image_file_${index}`}>
-                              <ImageItemPreview
-                                onDeleteImage={() => handleDeleteImage(index)}
-                                imageSrc={getImageSrc(index)}
-                              />
+                            <InputImage
+                              inputKey={String(index)}
+                              onDeleteImage={() => handleDeleteImage(index)}
+                              imageSrc={getImageSrc(index)}
+                              onSelectImage={(newImage) => {
+                                setProductImages((oldState) => {
+                                  const newState = [...oldState, newImage];
 
-                              <Input
-                                id={`image_file_${index}`}
-                                type="file"
-                                hidden
-                                accept="image/*"
-                                onChange={(e) => {
-                                  if (e.target.files?.length) {
-                                    setProductImages((oldState) => {
-                                      const newState = [
-                                        ...oldState,
-                                        (e?.target?.files || [])[0],
-                                      ];
-
-                                      return newState as string[];
-                                    });
-                                  }
-                                }}
-                              />
-                            </label>
+                                  return newState as string[];
+                                });
+                              }}
+                            />
                           );
                         })}
                     </ImageListContainer>

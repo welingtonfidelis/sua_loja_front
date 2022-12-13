@@ -279,6 +279,7 @@
     "button_back": "Voltar",
     "button_ok": "Ok",
     "button_send": "Enviar",
+    "button_remove": "Remover",
     "required_input_value": "Campo obrigatório"
   }
 }
