@@ -3,23 +3,23 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  IconButton,
   Input,
   Switch,
-  Tag,
-  TagCloseButton,
-  TagLabel,
   Textarea,
 } from "@chakra-ui/react";
 import { Select as SelectSearch } from "chakra-react-select";
-import { Field, Formik, Form, FormikHelpers } from "formik";
+import { Field, Formik, Form, FormikHelpers, FormikErrors } from "formik";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { FaPlus } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { InputImage } from "../../components/InputImage";
 
 import { PageHeader } from "../../components/pageHeader";
 import { Preloader } from "../../components/preloader";
+import { ProductVariation } from "../../domains/productVariation";
 import { useGetCategoryOptionsFormat } from "../../services/requests/category";
 import {
   useCreateProduct,
@@ -27,6 +27,7 @@ import {
   useUpdateProduct,
 } from "../../services/requests/product";
 import { BordedContainer, InputTextError } from "../../shared/styles/input";
+import { VariationInput } from "./components/variatonInput";
 import { formValidate } from "./helper/formValidate";
 import {
   Container,
@@ -34,6 +35,8 @@ import {
   FormButtonContainer,
   FormContainer,
   ImageListContainer,
+  VariationListContainer,
+  VariationListContent,
 } from "./styles";
 import { FormProps } from "./types";
 
@@ -48,10 +51,9 @@ export const ProductDetail = () => {
   const { createProduct, isLoading: isLoadingCreateUser } = useCreateProduct();
   const { isLoading: isLoadingGetCategories, data: categoryOptions } =
     useGetCategoryOptionsFormat();
-  const [variation1Value, setVariation1Value] = useState("");
-  const [variation2Value, setVariation2Value] = useState("");
   const [productImages, setProductImages] = useState<File[] | string[]>([]);
   const [productDeleteImages, setProductDeleteImages] = useState<string[]>([]);
+  const deleteVariationId: number[] = [];
 
   const initialFormValues = useMemo(() => {
     if (data) setProductImages(data.images);
@@ -63,8 +65,7 @@ export const ProductDetail = () => {
       price: data?.price || 0,
       category_id: data?.category_id || 0,
       is_active: data?.is_active || false,
-      variation_1: data?.variation_1 || [],
-      variation_2: data?.variation_2 || [],
+      variation: data?.variation || [],
     };
   }, [data]);
 
@@ -87,6 +88,65 @@ export const ProductDetail = () => {
     });
   };
 
+  const handleChangeVariationName = (
+    id: number,
+    name: string,
+    originalVariation: ProductVariation[]
+  ) => {
+    const updatedVariation = originalVariation.map((item) => {
+      if (id === item.id) {
+        return {
+          ...item,
+          name,
+        };
+      }
+      return item;
+    });
+
+    return updatedVariation;
+  };
+
+  const handleChangeVariationValue = (
+    id: number,
+    value: string[],
+    originalVariation: ProductVariation[]
+  ) => {
+    const updatedVariation = originalVariation.map((item) => {
+      if (id === item.id) {
+        return {
+          ...item,
+          value,
+        };
+      }
+      return item;
+    });
+
+    return updatedVariation;
+  };
+
+  const handleDeleteVariation = (
+    id: number,
+    originalVariation: ProductVariation[]
+  ) => {
+    if (id > 0) deleteVariationId.push(id);
+
+    const updatedVariation = originalVariation.filter((item) => item.id !== id);
+
+    return updatedVariation;
+  };
+
+  const getImageSrc = (index: number) => {
+    if (productImages[index]) {
+      if (typeof productImages[index] === "string") {
+        return productImages[index] as string;
+      }
+
+      return URL.createObjectURL(productImages[index] as File);
+    }
+
+    return "";
+  };
+
   const handleSubmit = async (
     values: FormProps,
     actions: FormikHelpers<FormProps>
@@ -94,29 +154,57 @@ export const ProductDetail = () => {
     const formData = new FormData();
 
     Object.entries(values).forEach(([key, value]) => {
-      if (key !== "variation_1" && key !== "variation_2") {
+      if (key !== "variation") {
         formData.set(key, value);
       }
     });
 
-    values.variation_1.forEach((item) =>
-      formData.append("variation_1[]", item)
-    );
-    values.variation_2.forEach((item) =>
-      formData.append("variation_2[]", item)
+    (productImages as any[])
+      .filter((item) => typeof item !== "string")
+      .forEach((item) => formData.append("images", item));
+
+    productDeleteImages.forEach((item) =>
+      formData.append("delete_images[]", item)
     );
 
-    if (productImages.length) {
-      (productImages as any[])
-        .filter((item) => typeof item !== "string")
-        .forEach((item) => formData.append("files", item));
-    }
+    let addVariationCount = 0;
+    let updateVariationCount = 0;
+    values.variation.forEach((item, index) => {
+      if (item.id <= 0) {
+        formData.append(`add_variation[${addVariationCount}][name]`, item.name);
 
-    if (productDeleteImages.length) {
-      productDeleteImages.forEach((item) =>
-        formData.append("delete_images[]", item)
-      );
-    }
+        item.value.forEach((subItem) => {
+          formData.append(
+            `add_variation[${addVariationCount}][value][]`,
+            subItem
+          );
+        });
+        addVariationCount += 1;
+      } else {
+        formData.append(
+          `update_variation[${updateVariationCount}][id]`,
+          String(item.id)
+        );
+
+        formData.append(
+          `update_variation[${updateVariationCount}][name]`,
+          item.name
+        );
+
+        item.value.forEach((subItem) => {
+          formData.append(
+            `update_variation[${updateVariationCount}][value][]`,
+            subItem
+          );
+        });
+
+        updateVariationCount += 1;
+      }
+    });
+
+    deleteVariationId.forEach((item) => {
+      formData.append("delete_variation[]", String(item));
+    });
 
     if (id) {
       updateProduct(
@@ -156,30 +244,6 @@ export const ProductDetail = () => {
         );
       },
     });
-  };
-
-  const handleAddVariation = (original: string[], newValue: string) => {
-    if (!original.find((item) => item === newValue)) {
-      return [...original, newValue];
-    }
-
-    return original;
-  };
-
-  const handleRemoveVariation = (original: string[], newValue: string) => {
-    return original.filter((item) => item !== newValue);
-  };
-
-  const getImageSrc = (index: number) => {
-    if (productImages[index]) {
-      if (typeof productImages[index] === "string") {
-        return productImages[index] as string;
-      }
-
-      return URL.createObjectURL(productImages[index] as File);
-    }
-
-    return "";
   };
 
   return (
@@ -330,100 +394,82 @@ export const ProductDetail = () => {
                     )}
                   </Field>
 
-                  <Field name="variation_1">
+                  <Field name="variation">
                     {({ field }: any) => (
                       <FormControl>
                         <FormLabel mt="2" mb="0.2">
-                          {t("pages.product_new_edit.input_variation_1")}
+                          {t("pages.product_new_edit.input_variation")}
                         </FormLabel>
-                        <Input
-                          mb="1.5"
-                          value={variation1Value}
-                          onChange={(e) => setVariation1Value(e.target.value)}
-                          onKeyDown={(e) => {
-                            if (e.key === "Enter") {
-                              e.preventDefault();
-                              setFieldValue(
-                                "variation_1",
-                                handleAddVariation(
-                                  values.variation_1,
-                                  variation1Value
-                                )
-                              );
-                              setVariation1Value("");
-                            }
-                          }}
-                          placeholder={t(
-                            "pages.product_new_edit.input_variation_1"
-                          )}
-                        />
-                        {values.variation_1.map((item, index) => {
-                          return (
-                            <Tag key={index} mr="1">
-                              <TagLabel>{item}</TagLabel>
-                              <TagCloseButton
-                                onClick={() =>
-                                  setFieldValue(
-                                    "variation_1",
-                                    handleRemoveVariation(
-                                      values.variation_1,
-                                      item
-                                    )
-                                  )
-                                }
-                              />
-                            </Tag>
-                          );
-                        })}
-                      </FormControl>
-                    )}
-                  </Field>
+                        <BordedContainer
+                          inputError={Boolean(errors?.variation)}
+                        >
+                          <VariationListContent>
+                            <VariationListContainer>
+                              {values.variation.map((item) => {
+                                return (
+                                  <VariationInput
+                                    nameValue={item.name}
+                                    nameValueOnChange={(name) => {
+                                      const updatedItems =
+                                        handleChangeVariationName(
+                                          item.id,
+                                          name,
+                                          values.variation
+                                        );
 
-                  <Field name="variation_2">
-                    {({ field }: any) => (
-                      <FormControl>
-                        <FormLabel mt="2" mb="0.2">
-                          {t("pages.product_new_edit.input_variation_2")}
-                        </FormLabel>
-                        <Input
-                          mb="1.5"
-                          value={variation2Value}
-                          onChange={(e) => setVariation2Value(e.target.value)}
-                          onKeyDown={(e) => {
-                            if (e.key === "Enter") {
-                              e.preventDefault();
-                              setFieldValue(
-                                "variation_2",
-                                handleAddVariation(
-                                  values.variation_2,
-                                  variation2Value
-                                )
-                              );
-                              setVariation2Value("");
-                            }
-                          }}
-                          placeholder={t(
-                            "pages.product_new_edit.input_variation_2"
-                          )}
-                        />
-                        {values.variation_2.map((item, index) => {
-                          return (
-                            <Tag key={index} mr="1">
-                              <TagLabel>{item}</TagLabel>
-                              <TagCloseButton
-                                onClick={() =>
-                                  setFieldValue(
-                                    "variation_2",
-                                    handleRemoveVariation(
-                                      values.variation_2,
-                                      item
-                                    )
-                                  )
-                                }
-                              />
-                            </Tag>
-                          );
-                        })}
+                                      setFieldValue("variation", updatedItems);
+                                    }}
+                                    variationValue={item.value}
+                                    variationValueOnChange={(value) => {
+                                      const updatedItems =
+                                        handleChangeVariationValue(
+                                          item.id,
+                                          value,
+                                          values.variation
+                                        );
+
+                                      setFieldValue("variation", updatedItems);
+                                    }}
+                                    onDelete={() => {
+                                      const updatedItems =
+                                        handleDeleteVariation(
+                                          item.id,
+                                          values.variation
+                                        );
+
+                                      setFieldValue("variation", updatedItems);
+                                    }}
+                                  />
+                                );
+                              })}
+                            </VariationListContainer>
+
+                            <IconButton
+                              aria-label="Add variation"
+                              icon={<FaPlus />}
+                              onClick={() => {
+                                const emptyVariation = {
+                                  id: values.variation.length * -1,
+                                  name: "",
+                                  value: [],
+                                };
+
+                                setFieldValue("variation", [
+                                  ...values.variation,
+                                  emptyVariation,
+                                ]);
+                              }}
+                            />
+                          </VariationListContent>
+                        </BordedContainer>
+                        <InputTextError>
+                          {
+                            (
+                              (errors?.variation ||
+                                []) as FormikErrors<ProductVariation>[]
+                            ).find((item) => item)?.value
+                          }
+                        </InputTextError>
                       </FormControl>
                     )}
                   </Field>

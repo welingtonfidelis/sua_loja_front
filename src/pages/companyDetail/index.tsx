@@ -100,7 +100,7 @@ export const CompanyDetail = () => {
       formData.set(key, value);
     });
 
-    if (localProfileImage) formData.append("file", localProfileImage);
+    if (localProfileImage) formData.append("image", localProfileImage);
 
     if (id) {
       if (deleteProfileImage) formData.append("delete_image", "true");

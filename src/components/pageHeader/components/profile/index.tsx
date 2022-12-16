@@ -88,7 +88,7 @@ export const Profile = (props: Props) => {
       }
     });
 
-    if (localProfileImage) formData.append("file", localProfileImage);
+    if (localProfileImage) formData.append("image", localProfileImage);
 
     if (deleteProfileImage) formData.append("delete_image", "true");
 

@@ -1,3 +1,5 @@
+import { ProductVariation } from "./productVariation";
+
 export interface Product {
   id: number;
   name: string;
@@ -6,8 +8,7 @@ export interface Product {
   price: number;
   quantity: number;
   is_active: boolean;
-  variation_1: string[];
-  variation_2: string[];
+  variation: ProductVariation[];
   company_id: number;
   category_id: number;
 }

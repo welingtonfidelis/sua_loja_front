@@ -1,3 +1,6 @@
+import { Omit } from "lodash";
+import { ProductVariation } from "../../domains/productVariation";
+
 export interface FormProps {
     name: string;
     description: string;
@@ -5,6 +8,5 @@ export interface FormProps {
     quantity: number;
     is_active: boolean;
     category_id: number;
-    variation_1: string[];
-    variation_2: string[];
+    variation: ProductVariation[];
 }
