@@ -39,6 +39,9 @@ export const ProductList = () => {
   } = useDisclosure();
   const { getQueryKey, data, isLoading, error } = useGetProducts(filters);
 
+  console.log(filters);
+  
+
   if (error) {
     toast.error(t("pages.product_list.error_request_get_list_message") as string);
   }

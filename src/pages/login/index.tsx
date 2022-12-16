@@ -4,17 +4,26 @@ import { Formik, Form, Field, FormikHelpers } from "formik";
 
 import {
   ActionContainer,
+  ClosedEyeIcon,
   Container,
   Content,
   ForgotPasswordText,
   FormContainer,
   LogoContainer,
+  OpenedEyeIcon,
   WellcomeMessageText,
 } from "./styles";
 
 import logoImage from "../../assets/logo.png";
 import { ApplicationRoutes } from "../../shared/enum/applicationRoutes";
-import { Button, FormControl, FormErrorMessage, Input } from "@chakra-ui/react";
+import {
+  Button,
+  FormControl,
+  FormErrorMessage,
+  Input,
+  InputGroup,
+  InputRightElement,
+} from "@chakra-ui/react";
 import { formValidate } from "./helper/formValidate";
 import { userStore } from "../../store/user";
 import { FormProps } from "./types";
@@ -22,6 +31,7 @@ import { useLogin } from "../../services/requests/user";
 import { toast } from "react-toastify";
 import { responseErrorHandler } from "../../shared/handlers/responseError";
 import { HttpServerMessageEnum } from "../../shared/enum/httpServerMessage";
+import { useState } from "react";
 
 const { RESET_PASSWORD, DASHBOARD } = ApplicationRoutes;
 const { INVALID_USERNAME_OR_EMAIL, INVALID_PASSWORD } = HttpServerMessageEnum;
@@ -37,6 +47,7 @@ export const Login = () => {
   const validateFormFields = formValidate();
   const { login, isLoading } = useLogin();
   const { updateUser } = userStore();
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (
     values: FormProps,
@@ -50,6 +61,7 @@ export const Login = () => {
         }
       },
       onError(error) {
+        alert(JSON.stringify(error))
         const { message } = responseErrorHandler(error);
 
         if (message === INVALID_USERNAME_OR_EMAIL.message) {
@@ -113,11 +125,19 @@ export const Login = () => {
                       isInvalid={!!errors.password && touched.password}
                       mb="2"
                     >
-                      <Input
-                        {...field}
-                        type="password"
-                        placeholder={t("pages.login.input_password")}
-                      />
+                      <InputGroup>
+                        <Input
+                          {...field}
+                          type={showPassword ? "text" : "password"}
+                          placeholder={t("pages.login.input_password")}
+                        />
+                        <InputRightElement
+                          width="2.5rem"
+                          onClick={() => setShowPassword(!showPassword)}
+                        >
+                          {showPassword ? <OpenedEyeIcon /> : <ClosedEyeIcon />}
+                        </InputRightElement>
+                      </InputGroup>
                       <FormErrorMessage>{errors.password}</FormErrorMessage>
                     </FormControl>
                   )}

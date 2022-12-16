@@ -7,11 +7,6 @@ import {
   FormLabel,
   Input,
   Switch,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
   useDisclosure,
 } from "@chakra-ui/react";
 import { Field, Formik, Form, FormikHelpers } from "formik";
@@ -339,7 +334,7 @@ export const UserDetail = () => {
                                   item
                                 )}
                               >
-                                {item}
+                                {t(`generic.user_role_type_${item.toLocaleLowerCase()}`)}
                               </Checkbox>
                             );
                           })}

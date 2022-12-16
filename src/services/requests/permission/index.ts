@@ -1,8 +1,10 @@
 import { useQuery } from "react-query";
 import { EndPoints } from "../../../shared/enum/endPoints";
+import { ApplicationPermissions } from "../../../shared/enum/applicationPermissions";
 import { getPermissionList } from "./apiRequests";
 
 const { LIST } = EndPoints.PERMISSIONS;
+const { CLIENT } = ApplicationPermissions;
 
 // ===== QUERIES ===== //
 export const useGetListPermissions = () => {
@@ -13,5 +15,9 @@ export const useGetListPermissions = () => {
     getPermissionList
   );
 
-  return { getQueryKey, refetch, data, isLoading };
+  const treatedData = (data || []).filter(
+    (item) => (item as ApplicationPermissions) !== CLIENT
+  );
+
+  return { getQueryKey, refetch, data: treatedData, isLoading };
 };

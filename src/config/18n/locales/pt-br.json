@@ -232,7 +232,7 @@
       "input_search_id":  "Código",
       "input_search_category_id":  "Categoria",
       "input_search_name":  "Nome",
-      "button_new_company": "Nova Empresa",
+      "button_new_product": "Novo Produto",
       "alert_title_deactive_company": "Desativar produto",
       "alert_description_deactive_company": "Deseja realmente desativar este produto ({{name}})?",
       "alert_title_active_company": "Ativar produto",
@@ -280,6 +280,10 @@
     "button_ok": "Ok",
     "button_send": "Enviar",
     "button_remove": "Remover",
-    "required_input_value": "Campo obrigatório"
+    "required_input_value": "Campo obrigatório",
+    "user_role_type_user": "Usuário",
+    "user_role_type_admin": "Administrador",
+    "user_role_type_manager": "Gerente",
+    "user_role_type_client": "Cliente"
   }
 }

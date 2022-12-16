@@ -1,3 +1,4 @@
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import styled from "styled-components";
 
 import imageBackground from "../../assets/background_1.jpg";
@@ -86,4 +87,12 @@ export const ActionContainer = styled.div`
   flex: 1;
   margin-top: 1rem;
   justify-content: flex-end;
+`;
+
+export const OpenedEyeIcon = styled(FaEye)`
+  color: ${(props) => props.theme.colors.primary};
+`;
+
+export const ClosedEyeIcon = styled(FaEyeSlash)`
+  color: ${(props) => props.theme.colors.primary};
 `;
