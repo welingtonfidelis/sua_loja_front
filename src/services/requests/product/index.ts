@@ -1,4 +1,6 @@
 import { useMutation, useQuery } from "react-query";
+import isEmpty from "lodash/isEmpty";
+
 import { EndPoints } from "../../../shared/enum/endPoints";
 
 import {
@@ -28,7 +30,7 @@ export const useUpdateProduct = () => {
 export const useGetProducts = (params: GetProductsPayload) => {
   if (!params.filter_by_id) delete params.filter_by_id;
   if (!params.filter_by_name) delete params.filter_by_name;
-  if (!params.filter_by_category_id) delete params.filter_by_category_id;
+  if (isEmpty(params.filter_by_category_id)) delete params.filter_by_category_id;
 
   const getQueryKey = () => [LIST, params];
 

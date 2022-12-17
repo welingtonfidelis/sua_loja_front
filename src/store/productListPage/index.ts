@@ -6,7 +6,7 @@ const initiaState = {
     page: 1,
     filter_by_id: "",
     filter_by_name: "",
-    filter_by_category_id: "",
+    filter_by_category_id: [],
   },
 };
 

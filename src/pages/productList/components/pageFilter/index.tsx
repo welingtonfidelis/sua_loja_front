@@ -27,14 +27,17 @@ export const PageFilter = () => {
   return (
     <>
       <SearchInputContent>
-      <SelectContainer>
+        <SelectContainer>
           <SelectSearch
             isLoading={isLoadingGetCategories}
-            onChange={(e: any) => updateFilterByCategoryId(e.value)}
-            value={categoryOptions?.find(
-              (item) => item.value === Number(filters.filter_by_category_id)
+            onChange={(e) =>
+              updateFilterByCategoryId(e.map((item) => item?.value ?? 0))
+            }
+            value={(filters.filter_by_category_id || []).map((item) =>
+              categoryOptions?.find((subItem) => subItem.value === item)
             )}
             options={categoryOptions}
+            isMulti
             placeholder={t("pages.product_list.input_search_category_id")}
           />
 
