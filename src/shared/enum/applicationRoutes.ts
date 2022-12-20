@@ -1,5 +1,6 @@
 export enum ApplicationRoutes {
   ROOT = "/",
+  LOGIN = "/login",
   DASHBOARD = "/dashboard",
   
   RESET_PASSWORD = "/reset-password",
@@ -21,4 +22,6 @@ export enum ApplicationRoutes {
   PRODUCT_LIST = "/products",
   PRODUCT_EDIT = "/product/:id",
   PRODUCT_NEW = "/product",
+
+  CLIENT_PRODUCT_LIST = "/clients/"
 }

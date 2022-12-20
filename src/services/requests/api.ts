@@ -2,9 +2,13 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
 import { config } from "../../config";
 import { ApplicationRoutes } from "../../shared/enum/applicationRoutes";
+import { HttpServerMessageEnum } from "../../shared/enum/httpServerMessage";
+import { responseErrorHandler } from "../../shared/handlers/responseError";
 
 export type RequestConfig = AxiosRequestConfig;
 export type Response<T> = AxiosResponse<T>;
+
+const { NO_AUTH } = HttpServerMessageEnum;
 
 const api = axios.create({
   baseURL: config.REST_API_URL,
@@ -14,12 +18,13 @@ const api = axios.create({
 // api.interceptors.response.use(
 //   (response) => response,
 //   (error) => {
-//     console.log("error: ", error.response);
+//     const { message } = responseErrorHandler(error);
 
-//     if (error.response.data.message === "Not authenticated") {
+//     if (message === NO_AUTH.message) {
+//       console.log('sem login');
 //     }
 
-//     return Promise.reject(error.response.data.err);
+//     return Promise.reject(error);
 //   }
 // );
 

@@ -61,7 +61,6 @@ export const Login = () => {
         }
       },
       onError(error) {
-        alert(JSON.stringify(error))
         const { message } = responseErrorHandler(error);
 
         if (message === INVALID_USERNAME_OR_EMAIL.message) {

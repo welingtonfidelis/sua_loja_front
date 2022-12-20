@@ -28,7 +28,7 @@ import {
 } from "./styles";
 
 const { INVALID_RESET_TOKEN } = HttpServerMessageEnum;
-const { ROOT } = ApplicationRoutes;
+const { LOGIN } = ApplicationRoutes;
 
 const initialFormValues = {
   new_password: "",
@@ -52,7 +52,7 @@ export const UpdateResetedPassword = () => {
           t("pages.update_reseted_password.success_request_message") as string
         );
 
-        navigate(ROOT);
+        navigate(LOGIN);
       },
       onError(error) {
         const { message } = responseErrorHandler(error);

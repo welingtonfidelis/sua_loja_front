@@ -23,7 +23,7 @@ import { Container, IconBackContainer, TitleContainer } from "./styles";
 import { Props } from "./types";
 import { Profile } from "./components/profile";
 
-const { ROOT } = ApplicationRoutes;
+const { LOGIN } = ApplicationRoutes;
 
 export const PageHeader = (props: Props) => {
   const { title, hiddenUserMenu, leftIcon } = props;
@@ -62,7 +62,7 @@ export const PageHeader = (props: Props) => {
   const handleLogout = () => {
     clearUser();
     logout();
-    navigate(ROOT);
+    navigate(LOGIN);
   };
 
   return (

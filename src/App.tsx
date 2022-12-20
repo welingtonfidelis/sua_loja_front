@@ -36,9 +36,11 @@ export const App = () => {
         if (data) updateUser(data);
         else navigateToRoot();
       }
-    } catch {
-      navigateToRoot();
-    } finally {
+    }
+    // catch (err){
+        // navigateToRoot();
+    // }
+    finally {
       setIsLoading(false);
     }
   };
