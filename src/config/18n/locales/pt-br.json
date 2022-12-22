@@ -63,6 +63,10 @@
       "title_message": "Oops!",
       "description_message": "Página não encontrada"
     },
+    "hub": {
+      "page_title": "Hub",
+      "welcome_message": "Por favor, insira seus dados abaixo."
+    },
     "login": {
       "page_title": "Login",
       "welcome_message": "Por favor, insira seus dados abaixo.",
@@ -268,6 +272,9 @@
       "success_request_new_message": "Sucesso! Produto ({{name}}) criado",
       "error_request_edit_message": "Algo deu errado. Por favor, verifique as informações e tente novamente.",
       "error_request_new_message": "Algo deu errado. Por favor, verifique as informações e tente novamente."
+    },
+    "clientProductList": {
+      "page_title": "Produtos da loja"
     }
   },
   "generic": {

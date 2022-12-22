@@ -16,9 +16,11 @@ import { CategoryList } from "./pages/caregoryList";
 import { CategoryDetail } from "./pages/categoryDetail";
 import { ProductList } from "./pages/productList";
 import { ProductDetail } from "./pages/productDetail";
+import { Hub } from "./pages/hub";
 
 const {
   ROOT,
+  LOGIN,
   RESET_PASSWORD,
   UPDATE_RESETED_PASSWORD,
   DASHBOARD,
@@ -40,8 +42,16 @@ const { ADMIN, MANAGER, USER } = ApplicationPermissions;
 
 export const routes = [
   {
-    label: "pages.login.page_title",
+    label: "pages.hub.page_title",
     path: ROOT,
+    element: Hub,
+    layout: GuestLayout,
+    isMenuOption: false,
+    permissions: [],
+  },
+  {
+    label: "pages.login.page_title",
+    path: LOGIN,
     element: Login,
     layout: GuestLayout,
     isMenuOption: false,
