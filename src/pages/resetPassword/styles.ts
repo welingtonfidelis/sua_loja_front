@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-import imageBackground from "../../assets/background_1.jpg";
-
 export const Container = styled.div`
   height: 100%;
   display: flex;
@@ -9,8 +7,6 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   padding: 0 1rem;
-  /* background-image: url(${imageBackground}); */
-  /* box-shadow: inset 0 0 0 1000px rgb(25 118 210 / 45%); */
 `;
 
 export const Content = styled.div`
@@ -24,7 +20,7 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media (min-width: 800px) {
+  @media (min-width: 601px) {
     width: 30rem;
     min-height: 26rem;
   }

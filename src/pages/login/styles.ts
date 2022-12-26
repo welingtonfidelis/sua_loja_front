@@ -1,8 +1,6 @@
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import styled from "styled-components";
 
-import imageBackground from "../../assets/background_1.jpg";
-
 export const Container = styled.div`
   height: 100%;
   display: flex;
@@ -10,7 +8,6 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   padding: 0 1rem;
-  /* background-image: url(${imageBackground}); */
 `;
 
 export const Content = styled.div`
@@ -24,7 +21,7 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media (min-width: 800px) {
+  @media (min-width: 601px) {
     width: 30rem;
     min-height: 26rem;
   }
@@ -39,7 +36,7 @@ export const LogoContainer = styled.div`
     width: 8rem;
   }
 
-  @media (min-width: 800px) {
+  @media (min-width: 601px) {
     img {
       width: 10rem;
     }

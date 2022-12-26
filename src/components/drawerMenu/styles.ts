@@ -97,7 +97,7 @@ export const DrawerMenuItem = styled.span<{ selected: boolean }>`
   background: ${(props) => (props.selected ? props.theme.colors.tertiary : "")};
   color: ${(props) => (props.selected ? "white" : "")};
   border-radius: 4px;
-  padding: 8px;
+  padding: .5rem;
   transition: 0.5s;
 
   &:hover {

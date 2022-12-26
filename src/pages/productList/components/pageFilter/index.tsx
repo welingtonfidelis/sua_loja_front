@@ -6,7 +6,6 @@ import { Select as SelectSearch } from "chakra-react-select";
 
 import { ApplicationRoutes } from "../../../../shared/enum/applicationRoutes";
 import { InputContainer, SearchInputContent, SelectContainer } from "./styles";
-import { companyListPageStore } from "../../../../store/companyListPage";
 import { useGetCategoryOptionsFormat } from "../../../../services/requests/category";
 import { productListPageStore } from "../../../../store/productListPage";
 
@@ -38,6 +37,7 @@ export const PageFilter = () => {
             )}
             options={categoryOptions}
             isMulti
+            useBasicStyles
             placeholder={t("pages.product_list.input_search_category_id")}
           />
 
