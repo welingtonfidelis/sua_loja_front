@@ -39,7 +39,7 @@ export const useGetCategories = (params: GetCategoriesPayload) => {
 };
 
 export const useGetCategoryOptionsFormat = () => {
-  const getQueryKey = () => [LIST, "options_format"];
+  const getQueryKey = () => [LIST, "category_options_format"];
 
   const { data, refetch, isLoading, error } = useQuery(getQueryKey(), () =>
     getCategories({ page: 1, limit: 100 })

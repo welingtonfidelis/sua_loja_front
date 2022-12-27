@@ -16,29 +16,16 @@ import { ApplicationRoutes } from "../../shared/enum/applicationRoutes";
 import { SelectedCompanyProps } from "./types";
 import { Button } from "@chakra-ui/react";
 import { FaSearch } from "react-icons/fa";
+import { useGetClientCompanyOptionsFormat } from "../../services/requests/client";
 
 const { LOGIN } = ApplicationRoutes;
-
-const options = [
-  {
-    label: "Empresa 1",
-    value: "empresa_1",
-  },
-  {
-    label: "Empresa 2",
-    value: "empresa_2",
-  },
-  {
-    label: "Empresa 3",
-    value: "empresa_3",
-  },
-];
 
 export const Hub = () => {
   const [selectedCompany, setSelectedCompany] =
     useState<SelectedCompanyProps | null>(null);
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { data, isLoading} = useGetClientCompanyOptionsFormat();
 
   const handleNavigateStore = () => {
     console.log("->", selectedCompany?.value);
@@ -76,16 +63,16 @@ export const Hub = () => {
 
         <SelectSearchContainer>
           <SelectSearch
-            isLoading={false}
+            isLoading={isLoading}
             onChange={(e) => setSelectedCompany(e)}
             value={selectedCompany}
-            options={options}
+            options={data}
             placeholder="Empresa"
             useBasicStyles
           />
           <Button
             colorScheme="blue"
-            isLoading={false}
+            isLoading={isLoading}
             disabled={!selectedCompany?.value.length}
             onClick={handleNavigateStore}
           >

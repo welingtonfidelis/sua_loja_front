@@ -40,4 +40,8 @@ export const EndPoints = {
     UPDATE: "/products/:id",
     CREATE: "/products",
   },
+
+  CLIENTS: {
+    LIST_COMPANIES: "/clients/company"
+  }
 };
