@@ -3,25 +3,25 @@ export enum ApplicationRoutes {
   LOGIN = "/login",
   DASHBOARD = "/dashboard",
   
-  RESET_PASSWORD = "/reset-password",
-  UPDATE_RESETED_PASSWORD = "/update-reseted-password",
+  RESET_PASSWORD = "/recuperar-senha",
+  UPDATE_RESETED_PASSWORD = "/atualizar-senha-recuperada",
 
-  USER_LIST = "/users",
-  USER_EDIT = "/user/:id",
-  USER_NEW = "/user",
+  USER_LIST = "/usuarios",
+  USER_EDIT = "/usuario/:id",
+  USER_NEW = "/usuario",
 
-  COMPANY_LIST = "/companies",
-  COMPANY_EDIT = "/company/:id",
-  COMPANY_NEW = "/company",
-  COMPANY_USERS_LIST = "/companies/users",
+  COMPANY_LIST = "/empresas",
+  COMPANY_EDIT = "/empresa/:id",
+  COMPANY_NEW = "/empresa",
+  COMPANY_USERS_LIST = "/empresas/users",
 
-  CATEGORY_LIST = "/categories",
-  CATEGORY_EDIT = "/category/:id",
-  CATEGORY_NEW = "/category",
+  CATEGORY_LIST = "/categorias",
+  CATEGORY_EDIT = "/categoria/:id",
+  CATEGORY_NEW = "/categoria",
 
-  PRODUCT_LIST = "/products",
-  PRODUCT_EDIT = "/product/:id",
-  PRODUCT_NEW = "/product",
+  PRODUCT_LIST = "/produtos",
+  PRODUCT_EDIT = "/produto/:id",
+  PRODUCT_NEW = "/produto",
 
-  CLIENT_PRODUCT_LIST = "/clients/"
+  CLIENT_PRODUCT_LIST = "/clientes/"
 }
