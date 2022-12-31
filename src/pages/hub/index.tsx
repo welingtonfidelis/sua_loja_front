@@ -18,7 +18,7 @@ import { Button } from "@chakra-ui/react";
 import { FaSearch } from "react-icons/fa";
 import { useGetClientCompanyOptionsFormat } from "../../services/requests/client";
 
-const { LOGIN } = ApplicationRoutes;
+const { LOGIN, CLIENT_PRODUCT_LIST } = ApplicationRoutes;
 
 export const Hub = () => {
   const [selectedCompany, setSelectedCompany] =
@@ -28,7 +28,8 @@ export const Hub = () => {
   const { data, isLoading} = useGetClientCompanyOptionsFormat();
 
   const handleNavigateStore = () => {
-    console.log("->", selectedCompany?.value);
+    const url = CLIENT_PRODUCT_LIST.replace(':company_name_key', selectedCompany?.value || '0');
+    navigate(url);
   };
 
   return (
@@ -53,7 +54,7 @@ export const Hub = () => {
         </LogoContainer>
 
         <span>
-          {t("pages.hub.welcome_message")} <br />{" "}
+          {t("pages.hub.welcome_message")} <br />
           <b>{t("generic.platform_name")}</b>
         </span>
       </LeftContent>

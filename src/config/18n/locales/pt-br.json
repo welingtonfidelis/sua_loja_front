@@ -65,9 +65,12 @@
     },
     "hub": {
       "page_title": "Hub",
-      "welcome_message": "Olá, seja muito bem vindo(a) ao {{platform_name}}",
+      "welcome_message": "Olá, seja muito bem vindo(a) ao ",
       "select_company_message": "Para começar, escolha uma das nossas empresas parceiras abaixo",
       "partner_company_message": "É um de nossos parceiros? Clique aqui"
+    },
+    "client_product_list": {
+      "page_title": "Produtos da loja"
     },
     "login": {
       "page_title": "Login",

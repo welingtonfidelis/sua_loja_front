@@ -23,5 +23,5 @@ export enum ApplicationRoutes {
   PRODUCT_EDIT = "/produto/:id",
   PRODUCT_NEW = "/produto",
 
-  CLIENT_PRODUCT_LIST = "/clientes/"
+  CLIENT_PRODUCT_LIST = "/clientes/:company_name_key",
 }

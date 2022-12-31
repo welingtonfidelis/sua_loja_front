@@ -17,6 +17,7 @@ import { CategoryDetail } from "./pages/categoryDetail";
 import { ProductList } from "./pages/productList";
 import { ProductDetail } from "./pages/productDetail";
 import { Hub } from "./pages/hub";
+import { ClientProductList } from "./pages/clientProductList";
 
 const {
   ROOT,
@@ -37,6 +38,7 @@ const {
   PRODUCT_LIST,
   PRODUCT_EDIT,
   PRODUCT_NEW,
+  CLIENT_PRODUCT_LIST,
 } = ApplicationRoutes;
 const { ADMIN, MANAGER, USER } = ApplicationPermissions;
 
@@ -69,6 +71,14 @@ export const routes = [
     label: "pages.update_reseted_password.page_title",
     path: UPDATE_RESETED_PASSWORD,
     element: UpdateResetedPassword,
+    layout: GuestLayout,
+    isMenuOption: false,
+    permissions: [],
+  },
+  {
+    label: "pages.client_product_list.page_title",
+    path: CLIENT_PRODUCT_LIST,
+    element: ClientProductList,
     layout: GuestLayout,
     isMenuOption: false,
     permissions: [],

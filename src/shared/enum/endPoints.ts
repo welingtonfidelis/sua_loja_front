@@ -42,6 +42,9 @@ export const EndPoints = {
   },
 
   CLIENTS: {
-    LIST_COMPANIES: "/clients/company"
+    LIST_COMPANIES: "/clients/company",
+    LIST_CATEGORIES: "/clients/categories",
+    LIST_PRODUCTS: "/clients/products",
+    LIST_COMPANY_PROFILE: "/clients/company/profile",
   }
 };
