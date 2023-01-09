@@ -1,19 +1,14 @@
 import {
   Avatar,
   AvatarBadge,
-  Badge,
   Button,
-  Icon,
   Input,
   InputGroup,
   InputRightElement,
 } from "@chakra-ui/react";
-import { FaCar, FaSearch, FaShoppingCart, FaUser } from "react-icons/fa";
+import { FaSearch, FaShoppingCart } from "react-icons/fa";
 import { useParams } from "react-router-dom";
-import {
-  useGetClientCategoryOptionsFormat,
-  useGetClientCompanyProfile,
-} from "../../services/requests/client";
+import { useGetClientCompanyProfile } from "../../services/requests/client";
 import {
   Container,
   HeaderContent,
@@ -22,14 +17,15 @@ import {
   SearchButtonContent,
   SearchColumnContent,
 } from "./styles";
+import { clientProductListPageStore } from "../../store/clientProductListPage";
+import { PageFilter } from "./components/pageFilter";
 
 export const ClientProductList = () => {
   const params = useParams();
   const company_name_key = params.company_name_key || "";
   const { data: companyProfile, isLoading: companyProfileIsLoading } =
     useGetClientCompanyProfile({ company_name_key });
-  const { data: categoryOptions, isLoading: categoryOptionsIsLoading } =
-    useGetClientCategoryOptionsFormat(company_name_key);
+  const { filters } = clientProductListPageStore();
 
   return (
     <Container>
@@ -64,10 +60,16 @@ export const ClientProductList = () => {
         <HeaderIconsContent>
           <Avatar name="" src="" size="sm" />
           <Avatar name="" src="" size="sm" icon={<FaShoppingCart />}>
-            <AvatarBadge boxSize="1.25em" bg="green.500" />
+            <AvatarBadge boxSize="1.5em" bg="green.500">
+              0
+            </AvatarBadge>
           </Avatar>
         </HeaderIconsContent>
       </HeaderContent>
+
+      <aside>
+        <PageFilter company_name_key={company_name_key} />
+      </aside>
     </Container>
   );
 };
