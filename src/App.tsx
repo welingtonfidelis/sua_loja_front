@@ -9,7 +9,7 @@ import { AppRouter } from "./AppRouter";
 import { userStore } from "./store/user";
 import i18n from "./config/18n";
 import { Preloader } from "./components/preloader";
-import { worker } from "./services/mocks/requests/browser";
+// import { worker } from "./services/mocks/requests/browser";
 import { config } from "./config";
 
 import { GlobalStyles } from "./global.styles";
@@ -46,14 +46,16 @@ export const App = () => {
   };
 
   useLayoutEffect(() => {
-    if (config.IS_MOCK_ENABLE) {
-      worker.start({
-        onUnhandledRequest(req: any) {
-          // For debugger MSW mock handlers error
-          console.warn("Found an unhandled request on MSW", req);
-        },
-      });
-    }
+    // TODO fix error for msw lib use
+    
+    // if (config.IS_MOCK_ENABLE) {
+    //   worker.start({
+    //     onUnhandledRequest(req: any) {
+    //       // For debugger MSW mock handlers error
+    //       console.warn("Found an unhandled request on MSW", req);
+    //     },
+    //   });
+    // }
 
     getUserProfile();
   }, []);
